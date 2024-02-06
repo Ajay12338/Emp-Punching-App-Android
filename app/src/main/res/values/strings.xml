@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">empPunching4.3</string>
+    <string name="week">Week</string>
+    <string name="select_a_week">Select a Week</string>
+    <string name="company_logo">Company Logo</string>
+    <string name="project_name">Project</string>
+</resources>
