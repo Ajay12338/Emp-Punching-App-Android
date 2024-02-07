@@ -42,7 +42,9 @@ public class AddProjects extends AppCompatActivity {
                                 String projectName = data.getStringExtra("project");
                                 String customerName = data.getStringExtra("customer");
                                 String description = data.getStringExtra("desc");
-                                addNewCard(projectName, customerName, description);
+                                String time = data.getStringExtra("time");
+                                String shift = data.getStringExtra("shift");
+                                addNewCard(projectName, customerName, description,time,shift);
                             }
                         }
                     }
@@ -56,7 +58,8 @@ public class AddProjects extends AppCompatActivity {
         });
 
     }
-    private void addNewCard(String projectName, String customerName, String description) {
+    private void addNewCard(String projectName, String customerName, String description,String time , String shift) {
+        String mainText = "Project Name: " + projectName + "\nCustomer: " + customerName + "\nDescription: " + description + "\nTime:" + time + "\nShift:" + shift;
         CardView cardView = new CardView(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -65,7 +68,7 @@ public class AddProjects extends AppCompatActivity {
         layoutParams.setMargins(16, 16, 16, 20);
         cardView.setLayoutParams(layoutParams);
         TextView projectInfoTextView = new TextView(this);
-        projectInfoTextView.setText("Project Name: " + projectName + "\nCustomer: " + customerName + "\nDescription: " + description);
+        projectInfoTextView.setText(mainText);
         projectInfoTextView.setTextSize(18);
         projectInfoTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
         LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(

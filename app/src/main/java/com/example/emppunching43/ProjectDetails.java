@@ -1,6 +1,7 @@
 package com.example.emppunching43;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,16 +12,20 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ProjectDetails extends AppCompatActivity {
-    private Button btnAdd;
+    private AutoCompleteTextView shifts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_details);
+        shifts = findViewById(R.id.spinner5);
         String url = "http://192.168.0.25:3000/projects";
         //String url = "http://129.213.42.17:8082/dsysdev/hr/timesheet/getproject?party_id=5928&dates=17-Dec-2023&useremail=admin@doyenche.com";
         ApiCall apiCall = new ApiCall(getApplicationContext(), url);
@@ -39,7 +44,7 @@ public class ProjectDetails extends AppCompatActivity {
                         AutoCompleteTextView project_id = findViewById(R.id.spinner2);
                         String currId = itemList.get(currText);
                         String urlCustomer = "http://192.168.0.25:3000/customer";
-                       // String urlCustomer = "http://129.213.42.17:8082/dsysdev/hr/timesheet/Get_customer?pro_id=" + currId;
+                        //String urlCustomer = "http://129.213.42.17:8082/dsysdev/hr/timesheet/Get_customer?pro_id=" + currId;
                         ApiCall apiCall = new ApiCall(getApplicationContext(), urlCustomer);
                         apiCall.getCustomer(new ApiCall.VolleyCallbackCustomer() {
                             public void onSuccess(String customerName) {
@@ -59,7 +64,8 @@ public class ProjectDetails extends AppCompatActivity {
                 Toast.makeText(ProjectDetails.this,"Error Fetching Project Details",Toast.LENGTH_SHORT).show();
             }
         });
-        btnAdd = (Button) findViewById(R.id.AddBtn);
+        Button btnAdd = (Button) findViewById(R.id.AddBtn);
+        Button dateBtn = (Button) findViewById(R.id.DateBtn);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,14 +73,61 @@ public class ProjectDetails extends AppCompatActivity {
                 AutoCompleteTextView projectInputTxt = findViewById(R.id.spinner1);
                 AutoCompleteTextView customerInputTxt = findViewById(R.id.spinner2);
                 AutoCompleteTextView descInputTxt = findViewById(R.id.spinner3);
+                AutoCompleteTextView currDate = findViewById(R.id.spinner4);
 
                 resultIntent.putExtra("project",projectInputTxt.getText().toString() );
                 resultIntent.putExtra("customer", customerInputTxt.getText().toString());
                 resultIntent.putExtra("desc", descInputTxt.getText().toString());
+                resultIntent.putExtra("time",currDate.getText().toString());
+                resultIntent.putExtra("shift",shifts.getText().toString());
 
                 setResult(RESULT_OK, resultIntent);
                 finish();
             }
         });
+
+
+        dateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .setHour(12)
+                        .setMinute(10)
+                        .setTitleText("Select Appointment time")
+                        .build();
+
+                picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int hour = picker.getHour();
+                        int minute = picker.getMinute();
+                        String selectedTime = hour + ":" + minute;
+                        AutoCompleteTextView project_id = findViewById(R.id.spinner4);
+                        project_id.setText(selectedTime);
+                    }
+                });
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                picker.show(fragmentManager, "timePicker");
+
+            }
+        });
+
+        // This is for shifts :)
+        List<String> allShifts = new ArrayList<String>();
+        allShifts.add("Day");
+        allShifts.add("Night");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(ProjectDetails.this, R.layout.drop_down_items, allShifts);
+        shifts.setAdapter(adapter);
+        shifts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(ProjectDetails.this, shifts.getText().toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
     }
 }
