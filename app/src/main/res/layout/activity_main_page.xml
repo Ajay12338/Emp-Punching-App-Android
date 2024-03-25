@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainPage">
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -13,7 +13,8 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:hint="@string/week">
+        android:hint="@string/week"
+        android:id="@+id/txtLayout1">
 
         <AutoCompleteTextView
             android:id="@+id/spinner"
@@ -42,7 +43,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
@@ -60,6 +60,16 @@
             android:contentDescription="@string/company_logo" />
 
     </FrameLayout>
+
+    <Button
+        android:id="@+id/shEmpDtl"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Employee Detail" />
 
 </RelativeLayout>
 

@@ -40,12 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long insert = db.insert(TABLE_NAME, null, cv);
 
-        if(insert == -1){
-            return false;
-        }
-        else {
-            return true;
-        }
+        return insert != -1;
     }
 
     public List<Login> getEveryone(){
@@ -66,8 +61,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 returnList.add(c);
             }while (cursor.moveToNext());
         }
-        else{
-        }
         cursor.close();
         db.close();
         return returnList;
@@ -76,22 +69,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query="SELECT * FROM " + TABLE_NAME + " WHERE "+COLUMN_USER_NAME+"=?";
         Cursor c = db.rawQuery(query,new String[]{l.getUserName()});
-        if(c.getCount()>0){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return c.getCount() > 0;
     }
     public boolean checkUserNamePassword(Login l){
         SQLiteDatabase db = this.getReadableDatabase();
         String query="SELECT * FROM " + TABLE_NAME + " WHERE "+COLUMN_USER_NAME+"=? and "+COLUMN_PASSWORD+"=?";
         Cursor c = db.rawQuery(query,new String[]{l.getUserName(),l.getPassword()});
-        if(c.getCount()>0){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return c.getCount() > 0;
     }
 }

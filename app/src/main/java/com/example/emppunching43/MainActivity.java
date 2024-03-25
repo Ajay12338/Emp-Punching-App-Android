@@ -8,12 +8,12 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
     private EditText edLogin,edPassword;
-    private Button btnLogin,btnAdd;
     private Login  l1;
     private Intent intent;
     private Handler mHandler;
@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         beginApp();
     }
     public void beginApp(){
-        btnAdd= (Button) findViewById(R.id.btnAdd);
-        btnLogin = (Button) findViewById(R.id.btnLgn);
+        Button btnAdd = (Button) findViewById(R.id.btnAdd);
+        Button btnLogin = (Button) findViewById(R.id.btnLgn);
         edLogin=(EditText) findViewById(R.id.ed1);
         edPassword = (EditText) findViewById(R.id.ed2);
         mHandler = new Handler();
@@ -36,14 +36,18 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseHelper dbh =new DatabaseHelper(MainActivity.this);
                 l1 = new Login(-1,edLogin.getText().toString(),edPassword.getText().toString());
                 boolean isValid =dbh.checkUserNamePassword(l1);
-                if(isValid == false){
+                if(!isValid){
                     Toast.makeText(MainActivity.this,"User name or Password is not Valid!\nTry Again!",Toast.LENGTH_SHORT).show();
                 }
                 else {
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            EditText empId = (EditText) findViewById(R.id.empID);
+                            EditText empName = (EditText) findViewById(R.id.ed1);
                             intent = new Intent(MainActivity.this,MainPage.class);
+                            intent.putExtra("emp_id",empId.getText().toString());
+                            intent.putExtra("emp_name",empName.getText().toString());
                             startActivity(intent);
                             Toast.makeText(MainActivity.this,"Success!!!!!",Toast.LENGTH_SHORT).show();
                         }
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
                 boolean isRegistered = dbh.checkUserName(l1);
-                if(isRegistered == true){
+                if(isRegistered){
                     Toast.makeText(MainActivity.this,"Already registered",Toast.LENGTH_LONG).show();
                 }else{
                     boolean b = dbh.adOne(l1);

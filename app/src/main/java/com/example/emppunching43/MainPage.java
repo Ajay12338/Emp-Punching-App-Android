@@ -6,33 +6,33 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainPage extends AppCompatActivity {
+    String empName,empId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         String party_id = "5928";
+        Intent i1 = getIntent();
+        empId = i1.getStringExtra("emp_id");
+        empName = i1.getStringExtra("emp_name");
         //String url = "http://129.213.42.17:8082/dsysdev/hr/timesheet/timesheet?party_id=" + party_id;
-       String url = "http://192.168.0.25:3000";
+        String url = "http://192.168.0.25:3000";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -52,6 +52,8 @@ public class MainPage extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                     Intent intent = new Intent(MainPage.this,ListDates.class);
+                                    intent.putExtra("emp_id",empId);
+                                    intent.putExtra("emp_name",empName);
                                     String currText = autoCompleteTextView.getText().toString();
                                     intent.putExtra("dateOfWeek",currText);
                                     Toast.makeText(MainPage.this,currText,Toast.LENGTH_SHORT).show();
@@ -75,5 +77,11 @@ public class MainPage extends AppCompatActivity {
         );
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);
+        Button employeeDetail = findViewById(R.id.shEmpDtl);
+        employeeDetail.setOnClickListener(view -> {
+            Intent intent = new Intent(MainPage.this,EmployeeDetails.class);
+            intent.putExtra("emp_name",empName);
+            startActivity(intent);
+        });
     }
 }

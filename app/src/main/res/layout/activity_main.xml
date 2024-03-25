@@ -11,14 +11,14 @@
         android:id="@+id/ed1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:hint="UserName or Email"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.388"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/empID"
+        app:layout_constraintHorizontal_bias="0.361"
+        app:layout_constraintStart_toStartOf="@+id/empID"
+        app:layout_constraintTop_toBottomOf="@+id/empID" />
 
     <EditText
         android:id="@+id/ed2"
@@ -38,10 +38,10 @@
         android:id="@+id/btnLgn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:text="LOGIN"
         app:layout_constraintEnd_toEndOf="@+id/ed2"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="@+id/ed2"
         app:layout_constraintTop_toBottomOf="@+id/ed2" />
 
@@ -49,9 +49,9 @@
         android:id="@+id/imageView"
         android:layout_width="246dp"
         android:layout_height="77dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="72dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
@@ -66,4 +66,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btnLgn"
         app:layout_constraintTop_toBottomOf="@+id/btnLgn" />
+
+    <EditText
+        android:id="@+id/empID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:ems="10"
+        android:hint="Employee ID"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

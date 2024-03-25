@@ -81,6 +81,38 @@
 
         </com.google.android.material.textfield.TextInputLayout>
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:gravity="center"
+            android:hint="Project ID">
+
+            <AutoCompleteTextView
+                android:id="@+id/spinner_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:padding="15dp"
+                android:textSize="20sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"
@@ -90,7 +122,7 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout_id">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -157,7 +189,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:hint="hh:mm"
+            android:hint="start_hh:mm"
             android:padding="10dp"
             app:endIconMode="clear_text">
 
@@ -191,6 +223,45 @@
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout4">
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:hint="end_hh:mm"
+            android:padding="10dp"
+            app:endIconMode="clear_text">
+
+            <AutoCompleteTextView
+                android:id="@+id/spinner5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:inputType="none"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/DateBtnEndDate"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="53dp"
+            android:padding="10dp"
+            android:text="Add Hours" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout5">
+
+        <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -200,7 +271,7 @@
             android:padding="10dp">
 
             <AutoCompleteTextView
-                android:id="@+id/spinner5"
+                android:id="@+id/spinner6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
@@ -219,7 +290,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.451"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout6"
         android:padding="15dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

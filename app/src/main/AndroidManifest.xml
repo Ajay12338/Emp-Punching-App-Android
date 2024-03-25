@@ -16,6 +16,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".EmployeeDetails"
+            android:exported="false"
+            android:label="@string/title_activity_employee_details"
+            android:theme="@style/Theme.EmpPunching43" />
+        <activity
+            android:name=".Approve"
+            android:exported="false" />
+        <activity
             android:name=".ProjectDetails"
             android:exported="false" />
         <activity

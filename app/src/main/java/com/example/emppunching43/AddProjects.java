@@ -1,65 +1,69 @@
 package com.example.emppunching43;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import static com.example.emppunching43.StoreWeeks.COL_CUSTOMER_NAME;
+import static com.example.emppunching43.StoreWeeks.COL_DESCRIPTION;
+import static com.example.emppunching43.StoreWeeks.COL_END_HOUR;
+import static com.example.emppunching43.StoreWeeks.COL_PROJECT_ID;
+import static com.example.emppunching43.StoreWeeks.COL_PROJECT_NAME;
+import static com.example.emppunching43.StoreWeeks.COL_SHIFT;
+import static com.example.emppunching43.StoreWeeks.COL_START_HOUR;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
-
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class AddProjects extends AppCompatActivity {
     private LinearLayout cardContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_projects);
         Intent i = getIntent();
         cardContainer = findViewById(R.id.cardContainer);
-        String dayOfWeek = i.getStringExtra("day");
+        String dayOfWeek = i.getStringExtra("date");
+        String date = "Date: "+dayOfWeek;
         TextView dateTxt = findViewById(R.id.dayOfWeek);
-        dateTxt.setText("Day: "+dayOfWeek);
+        dateTxt.setText(date);
         Button btn = (Button) findViewById(R.id.addBtn);
 
-        ActivityResultLauncher<Intent> cardData = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            if (data != null) {
-                                String projectName = data.getStringExtra("project");
-                                String customerName = data.getStringExtra("customer");
-                                String description = data.getStringExtra("desc");
-                                String time = data.getStringExtra("time");
-                                String shift = data.getStringExtra("shift");
-                                addNewCard(projectName, customerName, description,time,shift);
-                            }
-                        }
-                    }
-                });
+        StoreWeeks dbHelper = new StoreWeeks(this);
+        Cursor cursor = dbHelper.getDataForDate(dayOfWeek);
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    String projectName = cursor.getString(cursor.getColumnIndexOrThrow(COL_PROJECT_NAME));
+                    int projectID = cursor.getInt(cursor.getColumnIndexOrThrow(COL_PROJECT_ID));
+                    String customerName = cursor.getString(cursor.getColumnIndexOrThrow(COL_CUSTOMER_NAME));
+                    String description = cursor.getString(cursor.getColumnIndexOrThrow(COL_DESCRIPTION));
+                    String startTime = cursor.getString(cursor.getColumnIndexOrThrow(COL_START_HOUR));
+                    String endTime = cursor.getString(cursor.getColumnIndexOrThrow(COL_END_HOUR));
+                    String shift = cursor.getString(cursor.getColumnIndexOrThrow(COL_SHIFT));
+                    addNewCard(projectName,projectID, customerName, description, startTime, endTime, shift);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddProjects.this, ProjectDetails.class);
-                cardData.launch(intent);
+                intent.putExtra("date", dayOfWeek);
+                startActivity(intent);
             }
         });
 
     }
-    private void addNewCard(String projectName, String customerName, String description,String time , String shift) {
-        String mainText = "Project Name: " + projectName + "\nCustomer: " + customerName + "\nDescription: " + description + "\nTime:" + time + "\nShift:" + shift;
+    private void addNewCard(String projectName,int projectID, String customerName, String description,String start_time ,String end_time, String shift) {
+        String mainText = "Project Name: " + projectName + "\nProject Id: " + projectID + "\nCustomer: " + customerName + "\nDescription: " + description + "\n Start Time:" + start_time + "\n End Time:" + end_time + "\nShift:" + shift;
         CardView cardView = new CardView(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
