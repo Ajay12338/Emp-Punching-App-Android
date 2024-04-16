@@ -152,10 +152,9 @@ public class ListDates extends AppCompatActivity {
                     satHrs = String.valueOf(satDuration.toHours());
                     satMints = String.valueOf(satDuration.toMinutes() % 60);
                     submitStatus = isApproved ? "Y" : "N";
-                    String[] arrOfStr = sundayDate.split(" ");
-                    String weekStartDate = arrOfStr[1] + " " + arrOfStr[0]+ " " + arrOfStr[2];
+
                     try {
-                        String res = submitData(empID,empName,innerListMon.get(1),innerListMon.get(0),innerListMon.get(3),weekStartDate,innerListMon.get(6),sunHrs,monHrs,tueHrs,wedHrs,thurHrs,friHrs,satHrs,sunMints,monMints,tueMints,wedMints,thurMints,friMints,satMints,submitStatus,approveName,approveId);
+                        String res = submitData(empID,empName,innerListMon.get(1),innerListMon.get(0),innerListMon.get(3),sundayDate,innerListMon.get(6),sunHrs,monHrs,tueHrs,wedHrs,thurHrs,friHrs,satHrs,sunMints,monMints,tueMints,wedMints,thurMints,friMints,satMints,submitStatus,approveName,approveId);
                         Toast.makeText(this,res,Toast.LENGTH_SHORT).show();
                         Log.d("ajay",res);
                     } catch (IOException e) {

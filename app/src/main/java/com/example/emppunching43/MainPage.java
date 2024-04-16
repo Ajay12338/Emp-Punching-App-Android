@@ -31,8 +31,8 @@ public class MainPage extends AppCompatActivity {
         Intent i1 = getIntent();
         empId = i1.getStringExtra("emp_id");
         empName = i1.getStringExtra("emp_name");
-        //String url = "http://129.213.42.17:8082/dsysdev/hr/timesheet/timesheet?party_id=" + party_id;
-        String url = "http://192.168.0.25:3000";
+        String url = "http://129.213.42.17:8082/dsysdev/hr/timesheet/timesheet?party_id=5928&company_id=1&location_id=1";
+        //String url = "http://192.168.0.25:3000";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
