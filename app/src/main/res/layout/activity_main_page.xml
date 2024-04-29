@@ -20,7 +20,6 @@
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
             android:textSize="30sp"
             >
 
@@ -58,18 +57,52 @@
             android:padding="20dp"
             android:src="@drawable/logo"
             android:contentDescription="@string/company_logo" />
-
     </FrameLayout>
-
     <Button
-        android:id="@+id/shEmpDtl"
+        android:id="@+id/submitWeekDate"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtLayout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
+        android:text="Submit" />
+    <Button
+        android:id="@+id/shEmpDtl"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/submitWeekDate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:text="Employee Detail" />
+
+    <LinearLayout
+        android:id="@+id/statusLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shEmpDtl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical">
+
+        <View
+            android:id="@+id/indicatorView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/green_blink"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/statusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textSize="24sp"
+            android:textColor="@android:color/holo_green_dark"/>
+
+    </LinearLayout>
+
 
 </RelativeLayout>
 

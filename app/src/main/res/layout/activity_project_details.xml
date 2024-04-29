@@ -76,7 +76,6 @@
                 android:id="@+id/spinner1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
                 android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +106,6 @@
                 android:id="@+id/spinner_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
                 android:padding="15dp"
                 android:textSize="20sp" />
 
@@ -275,7 +273,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:inputType="none"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
     </RelativeLayout>

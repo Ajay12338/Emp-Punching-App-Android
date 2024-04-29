@@ -128,20 +128,13 @@ public class ApiCall {
                             empDetails.put("Description " + i, description);
                             empDetails.put("Week Start Date " + i, weekStartDate);
                             empDetails.put("Shift Code " + i, shiftCode);
-                            empDetails.put("Sunday Hours " + i, String.valueOf(sundayHours));
-                            empDetails.put("Monday Hours " + i, String.valueOf(mondayHours));
-                            empDetails.put("Tuesday Hours "+ i, String.valueOf(tuesdayHours));
-                            empDetails.put("Wednesday Hours "+ i, String.valueOf(wednesdayHours));
-                            empDetails.put("Thursday Hours "+ i, String.valueOf(thursdayHours));
-                            empDetails.put("Friday Hours "+ i, String.valueOf(fridayHours));
-                            empDetails.put("Saturday Hours "+ i, String.valueOf(saturdayHours));
-                            empDetails.put("Sunday Mints "+ i, String.valueOf(sundayMints));
-                            empDetails.put("Monday Mints "+ i, String.valueOf(mondayMints));
-                            empDetails.put("Tuesday Mints "+ i, String.valueOf(tuesdayMints));
-                            empDetails.put("Wednesday Mints "+ i, String.valueOf(wednesdayMints));
-                            empDetails.put("Thursday Mints "+ i, String.valueOf(thursdayMints));
-                            empDetails.put("Friday Mints "+ i, String.valueOf(fridayMints));
-                            empDetails.put("Saturday Mints "+ i, String.valueOf(saturdayMints));
+                            empDetails.put("Sunday " + i, sundayHours +" Hours, " + sundayMints +" Minutes");
+                            empDetails.put("Monday " + i, mondayHours +" Hours, " + mondayMints +" Minutes");
+                            empDetails.put("Tuesday "+ i, tuesdayHours +" Hours, " + tuesdayMints +" Minutes");
+                            empDetails.put("Wednesday "+ i, wednesdayHours +" Hours, " + wednesdayMints +" Minutes");
+                            empDetails.put("Thursday "+ i, thursdayHours +" Hours, " + thursdayMints +" Minutes");
+                            empDetails.put("Friday "+ i, fridayHours +" Hours, " + fridayMints +" Minutes");
+                            empDetails.put("Saturday "+ i, saturdayHours +" Hours, " + saturdayMints +" Minutes");
                             empDetails.put("Submit Date "+ i, submitDate);
                             empDetails.put("Approver Name "+ i, approverName);
                         }

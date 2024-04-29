@@ -28,9 +28,36 @@ public class EmployeeDetails extends AppCompatActivity {
         apiCall.getEmpDetail(new ApiCall.VolleyCallbackGetEmpDetail() {
             @Override
             public void onSuccess(LinkedHashMap<String, String> empDetails) {
-                for (String key : empDetails.keySet()){
-                    String value = empDetails.get(key);
-                    addNewCard(key,value);
+                int noOfWeeks = empDetails.size() / 13;
+                for(int i=0;i<noOfWeeks;i++){
+                    String projectName = empDetails.get("Project Name " + i);
+                    String description = empDetails.get("Description " + i);
+                    String weekStartDate = empDetails.get("Week Start Date " + i);
+                    String shiftCode = empDetails.get("Shift Code " + i);
+                    String sunday = empDetails.get("Sunday " + i);
+                    String monday = empDetails.get("Monday " + i);
+                    String tuesday = empDetails.get("Tuesday " + i);
+                    String wednesday = empDetails.get("Wednesday " + i);
+                    String thursday = empDetails.get("Thursday " + i);
+                    String friday = empDetails.get("Friday " + i);
+                    String saturday = empDetails.get("Saturday " + i);
+                    String submitDate = empDetails.get("Submit Date " + i);
+                    String approverName = empDetails.get("Approver Name " + i);
+
+                    String contentBuilder = "*** Week Start Date: " + weekStartDate + "***" + "\n" +
+                            "Project Name: " + projectName + "\n" +
+                            "Description: " + description + "\n" +
+                            "Shift Code: " + shiftCode + "\n" +
+                            "Sunday: " + sunday + "\n" +
+                            "Monday: " + monday + "\n" +
+                            "Tuesday: " + tuesday + "\n" +
+                            "Wednesday: " + wednesday + "\n" +
+                            "Thursday: " + thursday + "\n" +
+                            "Friday: " + friday + "\n" +
+                            "Saturday: " + saturday + "\n" +
+                            "Submit Date: " + submitDate + "\n" +
+                            "Approver Name: " + approverName + "\n";
+                    addNewCard(contentBuilder);
                 }
             }
             @Override
@@ -40,18 +67,16 @@ public class EmployeeDetails extends AppCompatActivity {
         });
 
     }
-    private void addNewCard(String key,String value) {
-        String mainText = key + ":" +  value;
+    private void addNewCard(String value) {
         CardView cardView = new CardView(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         layoutParams.setMargins(16, 16, 16, 20);
-        layoutParams.height = 150;
         cardView.setLayoutParams(layoutParams);
         TextView projectInfoTextView = new TextView(this);
-        projectInfoTextView.setText(mainText);
+        projectInfoTextView.setText(value);
         projectInfoTextView.setTextSize(18);
         projectInfoTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
         LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(

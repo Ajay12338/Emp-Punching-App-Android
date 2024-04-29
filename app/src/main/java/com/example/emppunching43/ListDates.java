@@ -1,27 +1,19 @@
 package com.example.emppunching43;
 
 
-import static com.example.emppunching43.StoreWeeks.COL_CUSTOMER_NAME;
-import static com.example.emppunching43.StoreWeeks.COL_DESCRIPTION;
-import static com.example.emppunching43.StoreWeeks.COL_END_HOUR;
-import static com.example.emppunching43.StoreWeeks.COL_PROJECT_ID;
-import static com.example.emppunching43.StoreWeeks.COL_PROJECT_NAME;
-import static com.example.emppunching43.StoreWeeks.COL_SHIFT;
-import static com.example.emppunching43.StoreWeeks.COL_START_HOUR;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import android.app.Activity;
+import android.app.Activity;;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 import com.example.emppunching43.databinding.ActivityListDatesBinding;
-
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalTime;
@@ -29,12 +21,16 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class ListDates extends AppCompatActivity {
 
@@ -47,6 +43,7 @@ public class ListDates extends AppCompatActivity {
     private static final String API_URL = "http://129.213.42.17:8082/dsysdev/hr/HR/FINAL_SUBMIT_ENTRY";
     String approveName,approveId,empID,empName,sundayDate,submitStatus;
     boolean isApproved;
+    Handler mHandler1 = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,34 +57,34 @@ public class ListDates extends AppCompatActivity {
         empName = i1.getStringExtra("emp_name");
         String[] dayList = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"};
         sundayDate = intent.getStringExtra("dateOfWeek");
-        String url = "http://192.168.0.25:3000/date/"+sundayDate;
-        ApiCallGetDates getDates = new ApiCallGetDates(getApplicationContext(),url);
-        getDates.getDates(new ApiCallGetDates.VolleyCallback() {
+        List<String> dates = giveWeekDays(sundayDate);
+
+        for (int i = 0; i < dayList.length; i++) {
+            listData = new ListData(dayList[i], dates.get(i));
+            all_dates.add(dates.get(i));
+            dataArrayList.add(listData);
+        }
+        Runnable runnable = new Runnable() {
             @Override
-            public void onSuccess(List<String> dates) {
-                for (int i = 0; i < dayList.length; i++){
-                    listData = new ListData(dayList[i], dates.get(i));
-                    all_dates.add(dates.get(i));
-                    dataArrayList.add(listData);
-                }
-                listAdapter = new ListAdapter(ListDates.this, dataArrayList);
+            public void run() {
+                StoreWeeks db = new StoreWeeks(ListDates.this);
+                listAdapter = new ListAdapter(ListDates.this, dataArrayList,db);
                 binding.listview.setAdapter(listAdapter);
                 binding.listview.setClickable(true);
+                mHandler1.postDelayed(this, 10000);
+            }
+        };
+        mHandler1.postDelayed(runnable, 0);
 
-                binding.listview.setOnItemClickListener((adapterView, view, i, l) -> {
-                    Intent intent12 = new Intent(ListDates.this,AddProjects.class);
-                    ListData clickedItem = dataArrayList.get(i);
-                    String clickedDate = clickedItem.date;
-                    Toast.makeText(ListDates.this, clickedDate, Toast.LENGTH_SHORT).show();
-                    intent12.putExtra("date",clickedDate);
-                    startActivity(intent12);
-                });
-            }
-            @Override
-            public void onFailure(String errorMessage) {
-                Toast.makeText(ListDates.this,"Error fetching dates",Toast.LENGTH_SHORT).show();
-            }
+        binding.listview.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent12 = new Intent(ListDates.this,AddProjects.class);
+            ListData clickedItem = dataArrayList.get(i);
+            String clickedDate = clickedItem.date;
+            Toast.makeText(ListDates.this, clickedDate, Toast.LENGTH_SHORT).show();
+            intent12.putExtra("date",clickedDate);
+            startActivity(intent12);
         });
+
         Button postBtn = (Button) findViewById(R.id.postBt);
         Toast.makeText(ListDates.this,empID,Toast.LENGTH_SHORT).show();
         postBtn.setOnClickListener(view -> {
@@ -105,7 +102,7 @@ public class ListDates extends AppCompatActivity {
     }
     String sunHrs,monHrs,tueHrs,wedHrs,thurHrs,friHrs,satHrs;
     String sunMints,monMints,tueMints, wedMints, thurMints, friMints,satMints;
-    // TODO: Final Posting of Data To Doyensys Server
+
     ActivityResultLauncher<Intent> approve = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -225,5 +222,24 @@ public class ListDates extends AppCompatActivity {
         }
 
         return Duration.between(start, end);
+    }
+    public static List<String> giveWeekDays(String startDateString) {
+        List<String> days = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
+        try {
+            Date startDate = dateFormat.parse(startDateString);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startDate);
+            for (int i = 0; i < 6; i++) {
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                Date nextDay = calendar.getTime();
+                dateFormat.applyPattern("MMM dd yyyy");
+                String dateString = dateFormat.format(nextDay);
+                days.add(dateString);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return days;
     }
 }

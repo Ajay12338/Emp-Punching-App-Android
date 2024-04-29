@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,26 @@ public class StoreWeeks extends SQLiteOpenHelper {
         }
         db.close();
         return allDatesPresent;
+    }
+    public boolean isDayDataPresent(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        boolean dataPresent = true;
+            Cursor cursor = db.query(
+                    TABLE_NAME,
+                    null,
+                    "day = ?",
+                    new String[] { date },
+                    null,
+                    null,
+                    null
+            );
+
+            if (cursor.getCount() == 0) {
+                dataPresent = false;
+            }
+            cursor.close();
+        db.close();
+        return dataPresent;
     }
     public List<String> getDataForDateList(String day) {
         List<String> dataList = new ArrayList<>();

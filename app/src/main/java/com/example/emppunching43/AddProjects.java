@@ -52,13 +52,10 @@ public class AddProjects extends AppCompatActivity {
             cursor.close();
         }
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddProjects.this, ProjectDetails.class);
-                intent.putExtra("date", dayOfWeek);
-                startActivity(intent);
-            }
+        btn.setOnClickListener(view -> {
+            Intent intent = new Intent(AddProjects.this, ProjectDetails.class);
+            intent.putExtra("date", dayOfWeek);
+            startActivity(intent);
         });
 
     }

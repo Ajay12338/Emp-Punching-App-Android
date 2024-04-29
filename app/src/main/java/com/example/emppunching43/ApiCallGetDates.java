@@ -23,31 +23,25 @@ public class ApiCallGetDates {
     }
     public void getDates(final ApiCallGetDates.VolleyCallback callback){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, this.url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            List<String> dates = new ArrayList<>();
-                            JSONArray itemsArray = response.getJSONArray("items");
-                            JSONObject k = itemsArray.getJSONObject(0);
-                            Iterator<String> iter = k.keys();
-                            while (iter.hasNext()) {
-                                String key = iter.next();
-                                dates.add(k.getString(key));
-                            }
-                            callback.onSuccess(dates);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            callback.onFailure("Error parsing JSON-Dates");
+                response -> {
+                    try {
+                        List<String> dates = new ArrayList<>();
+                        JSONArray itemsArray = response.getJSONArray("items");
+                        JSONObject k = itemsArray.getJSONObject(0);
+                        Iterator<String> iter = k.keys();
+                        while (iter.hasNext()) {
+                            String key = iter.next();
+                            dates.add(k.getString(key));
                         }
+                        callback.onSuccess(dates);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        callback.onFailure("Error parsing JSON-Dates");
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        callback.onFailure("Error Fetching Dates");
-                    }
+                error -> {
+                    error.printStackTrace();
+                    callback.onFailure("Error Fetching Dates");
                 }
         );
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
