@@ -22,10 +22,8 @@ public class ProjectDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_details);
         auto_com_shifts = findViewById(R.id.spinner6);
-        //String shiftsUrl = "http://129.213.42.17:8082/dsysdev/hr/timesheet/Get_shift?party_id=5928";
-        String shiftsUrl = "http://192.168.0.25:3000/shifts";
-        //String url = "http://129.213.42.17:8082/dsysdev/hr/timesheet/getproject?party_id=5928&dates=01-APR-2024&useremail=admin@doyenche.com&location_id=1&company_id=1";
-        String url = "http://192.168.0.25:3000/projects";
+        String shiftsUrl = "http://129.213.42.17:8082/dsysdev/hr/timesheet/Get_shift?party_id=5928";
+        String url = "http://129.213.42.17:8082/dsysdev/hr/timesheet/getproject?party_id=5928&dates=01-APR-2024&useremail=admin@doyenche.com&location_id=1&company_id=1";
         ApiCall apiCall = new ApiCall(getApplicationContext(), url);
         apiCall.getProjects(new ApiCall.VolleyCallback() {
             @Override
@@ -40,8 +38,7 @@ public class ProjectDetails extends AppCompatActivity {
                     AutoCompleteTextView project_id = findViewById(R.id.spinner2);
                     AutoCompleteTextView projectInputIdTxt = findViewById(R.id.spinner_id);
                     String currId = itemList.get(currText);
-                    String urlCustomer = "http://192.168.0.25:3000/customer";
-                    //String urlCustomer = "http://129.213.42.17:8082/dsysdev/hr/timesheet/Get_customer?pro_id=" + currId;
+                    String urlCustomer = "http://129.213.42.17:8082/dsysdev/hr/timesheet/Get_customer?pro_id=" + currId;
                     ApiCall apiCall1 = new ApiCall(getApplicationContext(), urlCustomer);
                     apiCall1.getCustomer(new ApiCall.VolleyCallbackCustomer() {
                         public void onSuccess(String customerName) {

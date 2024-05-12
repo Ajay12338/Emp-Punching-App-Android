@@ -48,8 +48,7 @@ public class MainPage extends AppCompatActivity {
         onlineStatusText = findViewById(R.id.statusTextView);
         onlineStatusBlink = findViewById(R.id.indicatorView);
         autoCompleteTextView = findViewById(R.id.spinner);
-        String url = "http://192.168.0.25:3000/";
-        //String url = "http://129.213.42.17:8082/dsysdev/hr/timesheet/timesheet?party_id=5928&company_id=1&location_id=1";
+        String url = "http://129.213.42.17:8082/dsysdev/hr/timesheet/timesheet?party_id=5928&company_id=1&location_id=1";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
